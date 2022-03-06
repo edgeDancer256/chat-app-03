@@ -8,11 +8,14 @@ export const Signup = () => {
   const history = useHistory();
   const [serverError, setServerError] = useState('');
 
+  const signup = ({ email, userName, password }, { setSubmitting }) =>
+    console.log('Signing Up: ', email, userName, password);
+
   return (
     <div className="auth-form">
       <h1>Sign Up</h1>
       <Formik
-        onSubmit={() => console.log('Submitting')}
+        onSubmit={signup}
         validateOnMount={true}
         initialValues={defaultValues}
         validationSchema={validationSchema}
@@ -41,6 +44,8 @@ export const Signup = () => {
           </Form>
         )}
       </Formik>
+
+      {!!serverError && <div className="error">{serverError}</div>}
     </div>
   );
 };
