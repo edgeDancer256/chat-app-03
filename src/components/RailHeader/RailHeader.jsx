@@ -17,7 +17,7 @@ export const RailHeader = () => {
         className="file-input"
         type="file"
         ref={inputRef}
-        accept="image/jpeg, image/png"
+        accept="image/jpeg,image/png"
         onChange={e => {
           const file = e.target?.files?.[0];
           if (file) {
@@ -25,6 +25,69 @@ export const RailHeader = () => {
           }
         }}
       />
+
+      {!!image && (
+        <FileUpload
+          crop
+          file={image}
+          header="Set your Avatar"
+          close={() => setImage(null)}
+          onSubmit={croppedImage => {
+            const storageRef = fb.storage.ref();
+            const uploadRef = storageRef.child(
+              `${chatConfig.userSecret}_avatar.jpg`,
+            );
+            uploadRef.put(croppedImage).then(() => {
+              uploadRef.getDownloadURL().then(url => {
+                fb.firestore
+                  .collection('chatUsers')
+                  .doc(chatConfig.userSecret)
+                  .update({ avatar: url })
+                  .then(() => setImage(null));
+              });
+            });
+          }}
+        />
+      )}
+
+      <div className="left-rail-header">
+        <Icon
+          onClick={() => fb.auth.signOut()}
+          className="sign-out"
+          name="sign out"
+        />
+        {configResolved && chatConfig ? (
+          <div className="current-user-info">
+            <IconGroup
+              onClick={() => {
+                const input = inputRef.current;
+                if (input) {
+                  input.value = '';
+                  input.click();
+                }
+              }}
+              className="user-avatar"
+              size="large"
+            >
+              {chatConfig.avatar ? (
+                <Image src={chatConfig.avatar} avatar />
+              ) : (
+                <div className="empty-avatar">
+                  {chatConfig.userName[0].toUpperCase()}
+                </div>
+              )}
+
+              <Icon corner name="camera" inverted circular />
+            </IconGroup>
+
+            <div className="current-username">@{chatConfig.userName}</div>
+          </div>
+        ) : (
+          <div className="user-loading">
+            <Loader active size="small" />
+          </div>
+        )}
+      </div>
     </>
   );
 };

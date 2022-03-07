@@ -46,8 +46,9 @@ export const FileUpload = ({
             className="submit"
             onClick={() => {
               if (crop && cropRef) {
-                const canvas =
-                  cropRef.current.getImagesScalesToCanvas().toDataURL;
+                const canvas = cropRef.current
+                  .getImageScaledToCanvas()
+                  .toDataURL();
                 fetch(canvas)
                   .then(res => res.blob())
                   .then(blob => onSubmit(blob));
