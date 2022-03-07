@@ -3,6 +3,7 @@ import { Login, Signup, Chat } from 'components';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { useEffect } from 'react';
 import { ChatProvider } from 'context';
+import 'semantic-ui-css/semantic.min.css';
 
 export const App = () => {
   const history = useHistory();
