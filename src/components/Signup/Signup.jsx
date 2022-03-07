@@ -1,3 +1,4 @@
+import { fb } from 'service';
 import { FormField } from 'components';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -8,8 +9,43 @@ export const Signup = () => {
   const history = useHistory();
   const [serverError, setServerError] = useState('');
 
-  const signup = ({ email, userName, password }, { setSubmitting }) =>
-    console.log('Signing Up: ', email, userName, password);
+  const signup = ({ email, userName, password }, { setSubmitting }) => {
+    fb.auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(res => {
+        if (res?.user?.uid) {
+          fetch('/api/createUser', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userName,
+              userId: res.user.uid,
+            }),
+          }).then(() => {
+            fb.firestore
+              .collection('chatUsers')
+              .doc(res.user.uid)
+              .set({ userName, avatar: '' });
+          });
+        } else {
+          setServerError(
+            "We're having trouble signing you up. Pease try again.",
+          );
+        }
+      })
+      .catch(err => {
+        if (err.code === 'auth/email-already-in-use') {
+          setServerError('An account with this email already exists');
+        } else {
+          setServerError(
+            "We're having trouble signing you up. Pease try again.",
+          );
+        }
+      })
+      .finally(() => setSubmitting(false));
+  };
 
   return (
     <div className="auth-form">

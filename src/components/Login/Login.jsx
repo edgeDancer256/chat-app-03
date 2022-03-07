@@ -27,8 +27,8 @@ export const Login = () => {
         } else {
           setServerError('Something went wrong');
         }
-        console.log(err);
-      });
+      })
+      .finally(() => setSubmitting(false));
   };
 
   return (
