@@ -30,7 +30,13 @@ export const MessageList = () => {
                     <img
                       className="message-image"
                       src={individualMessage.attachments[0].file}
-                      alt={individualMessage.id + '-attachment'}
+                      alt={individualMessage.attachments[0].file
+                        .replace(
+                          'https://api-chat-engine-io.s3.amazonaws.com/attachments/',
+                          '',
+                        )
+                        .split('?')
+                        .shift()}
                     />
                   )}
                 </div>

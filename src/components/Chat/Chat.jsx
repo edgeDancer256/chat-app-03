@@ -13,10 +13,6 @@ export const Chat = () => {
     setSelectedChat,
   } = useChat();
 
-  useEffect(() => {
-    console.log('My Chats: ', myChats);
-  }, [myChats]);
-
   return (
     <>
       <LeftRail />
@@ -29,14 +25,14 @@ export const Chat = () => {
           onConnect={() => {
             getChats(chatConfig, setMyChats);
           }}
-          //
+          //Selecting a chat
           onNewChat={chat => {
             if (chat.admin.username === chatConfig.userName) {
               selectChatClick(chat);
             }
             setMyChats([...myChats, chat].sort((a, b) => a.time - b.time));
           }}
-          //
+          //Deleting a chat
           onDeleteChat={chat => {
             if (selectedChat?.id === chat.id) {
               setSelectedChat(null);
@@ -47,7 +43,7 @@ export const Chat = () => {
                 .sort((a, b) => a.time - b.time),
             );
           }}
-          //
+          //New message
           onNewMessage={(chatId, message) => {
             if (selectedChat && chatId === selectedChat.id) {
               setSelectedChat({

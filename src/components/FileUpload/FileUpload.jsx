@@ -32,7 +32,7 @@ export const FileUpload = ({
             image={fileSrc}
           />
         ) : (
-          <Image size="medium" src={fileSrc} alt="preview" />
+          <Image size="medium" src={fileSrc} alt="Not an Image" />
         )}
       </Modal.Content>
 

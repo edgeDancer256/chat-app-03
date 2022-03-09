@@ -10,6 +10,7 @@ export const App = () => {
   const { authUser } = useAuth();
   const authResolved = useResolved(authUser);
 
+  //Check for authorised user
   useEffect(() => {
     if (authResolved) {
       history.push(!!authUser ? '/' : '/login');

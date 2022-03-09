@@ -12,13 +12,13 @@ export const ChatInput = () => {
 
   const [image, setImage] = useState();
 
-  //
+  //Handling File attach
   const onFileAttach = file => {
     setImage(file);
     setImageModalOpen(true);
   };
 
-  //
+  //Handling messages
   const sendChatMessage = () => {
     if (selectedChat && chatInputText) {
       setChatInputText('');
