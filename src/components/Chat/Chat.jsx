@@ -34,7 +34,7 @@ export const Chat = () => {
             if (chat.admin.username === chatConfig.userName) {
               selectChatClick(chat);
             }
-            setMyChats([...myChats, chat].sort((a, b) => a.id - b.id));
+            setMyChats([...myChats, chat].sort((a, b) => a.time - b.time));
           }}
           //
           onDeleteChat={chat => {
@@ -42,7 +42,9 @@ export const Chat = () => {
               setSelectedChat(null);
             }
             setMyChats(
-              myChats.filter(c => c.id !== chat.id).sort((a, b) => a.id - b.id),
+              myChats
+                .filter(c => c.id !== chat.id)
+                .sort((a, b) => a.time - b.time),
             );
           }}
           //
@@ -60,7 +62,7 @@ export const Chat = () => {
               last_message: message,
             };
             setMyChats(
-              [updatedChat, ...filteredChats].sort((a, b) => a.id - b.id),
+              [updatedChat, ...filteredChats].sort((a, b) => a.time - b.time),
             );
           }}
         />

@@ -1,6 +1,7 @@
 import { ChatList, RailHeader } from 'components';
 import { useChat } from 'context';
 import { useResolved } from 'hooks';
+import { useState } from 'react';
 import { Loader } from 'semantic-ui-react';
 
 export const LeftRail = () => {

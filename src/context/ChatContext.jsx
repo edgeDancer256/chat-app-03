@@ -9,23 +9,34 @@ export const ChatProvider = ({ children, authUser }) => {
   const [chatConfig, setChatConfig] = useState();
   const [selectedChat, setSelectedChat] = useState();
 
+  //Creating a chat
   const createChatClick = () => {
     newChat(chatConfig, { title: '' });
   };
 
+  //
   const deleteChatClick = chat => {
     const isAdmin = chat.admin.username === chatConfig.userName;
 
-    if (
-      isAdmin &&
-      window.confirm('Are you sure you want to delete this chat?')
-    ) {
-      deleteChat(chatConfig, chat.id);
+    if (isAdmin) {
+      if (window.confirm('Are you sure you want to delete this chat?')) {
+        deleteChat(chatConfig, chat.id);
+      }
     } else if (window.confirm('Are you sure you want to leave this chat?')) {
       leaveChat(chatConfig, chat.id, chatConfig.userName);
     }
+
+    // if (
+    //   isAdmin &&
+    //   window.confirm('Are you sure you want to delete this chat?')
+    // ) {
+    //   deleteChat(chatConfig, chat.id);
+    // } else if (window.confirm('Are you sure you want to leave this chat?')) {
+    //   leaveChat(chatConfig, chat.id, chatConfig.userName);
+    // }
   };
 
+  //
   const selectChatClick = chat => {
     getMessages(chatConfig, chat.id, messages => {
       setSelectedChat({
@@ -35,6 +46,7 @@ export const ChatProvider = ({ children, authUser }) => {
     });
   };
 
+  //
   useEffect(() => {
     if (authUser) {
       fb.firestore
@@ -51,6 +63,7 @@ export const ChatProvider = ({ children, authUser }) => {
     }
   }, [authUser]);
 
+  //
   return (
     <ChatContext.Provider
       value={{
@@ -70,6 +83,7 @@ export const ChatProvider = ({ children, authUser }) => {
   );
 };
 
+//
 export const useChat = () => {
   const {
     myChats,

@@ -21,7 +21,7 @@ const createUser = async (req, res) => {
     .catch(() => {
       res.json({
         body: null,
-        error: 'There was erroe creating user',
+        error: 'There was error creating user',
       });
     });
 };

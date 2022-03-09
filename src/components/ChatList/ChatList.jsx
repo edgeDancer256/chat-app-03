@@ -41,7 +41,7 @@ export const ChatList = () => {
                   <div className="preview-message">
                     {c.last_message.attachments.length
                       ? `${c.last_message.sender.username} sent an attachment`
-                      : c.last_message.text.slice(0, 50) + '...'}
+                      : c.last_message.text.slice(0, 50)}
                   </div>
                 </div>
               </>
@@ -49,14 +49,16 @@ export const ChatList = () => {
               <>
                 <Icon circular inverted color="brown" name="users" />
 
-                <div className="preview-username">
-                  {joinUsernames(c.people, chatConfig.userName).slice(0, 50) +
-                    '...'}
-                </div>
-                <div className="preview-message">
-                  {c.last_message.attachments.length
-                    ? `${c.last_message.sender.username} sent an attachment`
-                    : c.last_message.text.slice(0, 50) + '...'}
+                <div className="chat-list-preview">
+                  <div className="preview-username">
+                    {joinUsernames(c.people, chatConfig.userName).slice(0, 50) +
+                      '...'}
+                  </div>
+                  <div className="preview-message">
+                    {c.last_message.attachments.length
+                      ? `${c.last_message.sender.username} sent an attachment`
+                      : c.last_message.text.slice(0, 50)}
+                  </div>
                 </div>
               </>
             )}
